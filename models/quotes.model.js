@@ -2,7 +2,7 @@ const sql = require("../config/db.js");
 
 const Quotes = function (quote) {
   (this.categoryId = quote.categoryId),
-    (this.imageUrl = quote.imageUrl),
+    (this.image_url = quote.imageUrl),
     (this.isActive = quote.isActive),
     (this.source = quote.source);
 };
@@ -16,6 +16,17 @@ Quotes.insert = (quote, result) => {
       return;
     }
     result(null, { id: res.insertId, ...quote });
+  });
+};
+
+Quotes.delete = (id, result) => {
+  sql.query("Update Quotes set isActive = 0 where id = " + id, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    result(null, { success: true });
   });
 };
 
@@ -35,7 +46,8 @@ Quotes.incrementBookMarkCount = (id, result) => {
 
 Quotes.decrementBookMarkCount = (id, result) => {
   sql.query(
-    "Update Quotes set BookmarkCounter = BookmarkCounter - 1 where id = " + id,
+    "Update Quotes set BookmarkCounter = BookmarkCounter - 1 where BookmarkCounter > 0 and id = " +
+      id,
     (err, res) => {
       if (err) {
         console.log("error: ", err);

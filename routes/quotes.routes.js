@@ -4,4 +4,5 @@ module.exports = (app) => {
   app.delete("/api/quote", quotes.delete);
   app.post("/api/quote/incrementbookmark", quotes.incrementBookMarkCount);
   app.post("/api/quote/decrementbookmark", quotes.decrementBookMarkCount);
+  app.get("/api/quotes", quotes.getQuotesByCategory);
 };

@@ -61,7 +61,9 @@ Quotes.decrementBookMarkCount = (id, result) => {
 
 Quotes.getQuotesByCategory = (categoryId, result) => {
   sql.query(
-    "Select * from Quotes where CategoryId = " + categoryId + " isActive = 1;",
+    "Select * from Quotes where CategoryId = " +
+      categoryId +
+      " and isActive = 1;",
     (err, res) => {
       if (err) {
         console.log("error: ", err);

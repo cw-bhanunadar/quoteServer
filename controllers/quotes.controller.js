@@ -1,12 +1,13 @@
 const Quotes = require("../models/quotes.model.js");
+const CacheLayer = require("../service/quotes.service.js");
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!",
     });
   }
-
+  CacheLayer.clearCache(req.body.categoryId);
   // Create a Category
   const quote = new Quotes({
     categoryId: req.body.categoryId,
@@ -76,7 +77,12 @@ exports.getQuotesByCategory = (req, res) => {
       message: "Content can not be empty!",
     });
   }
-  Categories.getQuotesByCategory(req.body.categoryId, (err, data) => {
+  console.log(req.query);
+  const filter = {
+    categoryId: req.query.categoryId,
+    pageNumber: req.query.pageNumber,
+  };
+  CacheLayer.fetchQuotes(filter, (err, data) => {
     if (err)
       res.status(500).send({
         message: err.message || "Some error occurred while creating the User.",

@@ -1,12 +1,12 @@
 const Categories = require("../models/categories.model.js");
-
-exports.create = (req, res) => {
+const CacheLayer = require("../service/categories.service.js");
+exports.create = async (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!",
     });
   }
-
+  await CacheLayer.clearCache();
   // Create a Category
   const category = new Categories({
     name: req.body.name,
@@ -40,12 +40,7 @@ exports.delete = (req, res) => {
 };
 
 exports.fetchAll = (req, res) => {
-  if (!req.body) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-  }
-  Categories.fetchAll((err, data) => {
+  CacheLayer.fetchCategories((err, data) => {
     if (err)
       res.status(500).send({
         message: err.message || "Some error occurred while creating the User.",

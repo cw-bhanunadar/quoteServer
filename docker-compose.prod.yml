@@ -7,11 +7,9 @@ services:
     restart: always
     volumes:
       - ./logs:/usr/src/app/logs
-    links:
+    depends_on:
       - redis
-    ports:
-      - 80:3000
-      - 443:3000
+      - mysql
 
   mysql:
     image: mysql:5.6.51
@@ -19,8 +17,6 @@ services:
     env_file: .env.prod
     volumes:
       - ./mysql-data:/var/lib/mysql
-    ports:
-      - "3306:3306"
     restart: always
 
   redis:
@@ -29,3 +25,15 @@ services:
     container_name: cache
     expose:
       - 6379
+  
+  nginx:
+    image: nginx:1.19.3
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - /etc/letsencrypt/live/bhanunadar.com:/etc/ssl/
+      - ./logs/nginx:/var/log/nginx
+    ports:
+      - 80:80
+      - 443:443
+      - 3306:3306
+    restart: unless-stopped

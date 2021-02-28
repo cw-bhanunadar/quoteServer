@@ -11,7 +11,6 @@ Quotes.insert = (quote, result) => {
   quote.isActive = 1;
   sql.query("Insert into Quotes SET?", quote, (err, res) => {
     if (err) {
-      console.log("error: ", err);
       result(err, null);
       return;
     }
@@ -22,7 +21,6 @@ Quotes.insert = (quote, result) => {
 Quotes.delete = (id, result) => {
   sql.query("Update Quotes set isActive = 0 where id = " + id, (err, res) => {
     if (err) {
-      console.log("error: ", err);
       result(err, null);
       return;
     }
@@ -35,7 +33,6 @@ Quotes.incrementBookMarkCount = (id, result) => {
     "Update Quotes set BookmarkCounter = BookmarkCounter + 1 where id = " + id,
     (err, res) => {
       if (err) {
-        console.log("error: ", err);
         result(err, null);
         return;
       }
@@ -50,7 +47,6 @@ Quotes.decrementBookMarkCount = (id, result) => {
       id,
     (err, res) => {
       if (err) {
-        console.log("error: ", err);
         result(err, null);
         return;
       }
@@ -66,7 +62,6 @@ Quotes.getQuotesByCategory = (categoryId, result) => {
       " and isActive = 1;",
     (err, res) => {
       if (err) {
-        console.log("error: ", err);
         result(err, null);
         return;
       }

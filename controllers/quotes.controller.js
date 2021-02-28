@@ -77,7 +77,6 @@ exports.getQuotesByCategory = (req, res) => {
       message: "Content can not be empty!",
     });
   }
-  console.log(req.query);
   const filter = {
     categoryId: req.query.categoryId,
     pageNumber: req.query.pageNumber,

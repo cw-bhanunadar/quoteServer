@@ -8,12 +8,9 @@ User.create = (newUser, result) => {
   newUser.password = bcrypt.hashSync(newUser.password, 10);
   sql.query("INSERT INTO Users SET ?", newUser, (err, res) => {
     if (err) {
-      console.log("error: ", err);
       result(err, null);
       return;
     }
-
-    console.log("created customer: ", { id: res.insertId, ...newUser });
     result(null, { id: res.insertId, ...newUser });
   });
 };
@@ -23,7 +20,6 @@ User.login = (user, result) => {
     "Select password from Users where name='" + user.name + "'",
     function (error, results, fields) {
       if (error) {
-        console.log("error: ", error);
         result(error, null);
         return;
       }

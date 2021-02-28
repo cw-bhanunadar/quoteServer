@@ -9,7 +9,6 @@ const Categories = function (category) {
 Categories.create = (category, result) => {
   sql.query("Insert into Categories SET?", category, (err, res) => {
     if (err) {
-      console.log("error: ", err);
       result(err, null);
       return;
     }
@@ -22,7 +21,6 @@ Categories.delete = (id, result) => {
     "Update Categories set isActive = 0 where id = " + id,
     (err, res) => {
       if (err) {
-        console.log("error: ", err);
         result(err, null);
         return;
       }
@@ -34,7 +32,6 @@ Categories.delete = (id, result) => {
 Categories.fetchAll = (result) => {
   sql.query("Select * from Categories where isActive = 1", (err, res) => {
     if (err) {
-      console.log("error: ", err);
       result(err, null);
       return;
     }

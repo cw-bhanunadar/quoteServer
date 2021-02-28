@@ -5,8 +5,8 @@ const Categories = require("../models/categories.model.js");
 const fetchCategories = async (result) => {
   const rawData = await Cache.getAsync(categoryCacheKey);
   const categories = JSON.parse(rawData);
-  console.log(categories);
   if (categories == null) {
+    
     Categories.fetchAll(async (err, res) => {
       if (err) {
         result(err, null);

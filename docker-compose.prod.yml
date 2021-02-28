@@ -30,7 +30,7 @@ services:
     image: nginx:1.19.3
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - /etc/letsencrypt/live/bhanunadar.com:/etc/ssl/
+      - /etc/letsencrypt/copy/bhanunadar.com:/etc/ssl/
       - ./logs/nginx:/var/log/nginx
     ports:
       - 80:80

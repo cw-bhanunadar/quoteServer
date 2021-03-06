@@ -4,7 +4,7 @@
   "description": "\"Server for quote app\"",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js > my_app_log.log 2> my_app_err.log"
   },
   "author": "bhanu.nadar@gmail.com",
   "license": "ISC",

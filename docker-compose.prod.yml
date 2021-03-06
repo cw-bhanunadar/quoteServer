@@ -6,7 +6,7 @@ services:
     env_file: .env.prod
     restart: always
     volumes:
-      - ./logs:/usr/src/app/logs
+      - ./logs/app:/usr/src/app/logs
     depends_on:
       - redis
       - mysql
@@ -17,6 +17,10 @@ services:
     env_file: .env.prod
     volumes:
       - ./mysql-data:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql/
+      - ./mysql:/etc/mysql/mysql.conf.d/
+    ports:
+      - 3306:3306
     restart: always
 
   redis:
@@ -35,5 +39,4 @@ services:
     ports:
       - 80:80
       - 443:443
-      - 3306:3306
     restart: unless-stopped
